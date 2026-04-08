@@ -222,6 +222,18 @@
         .solution-hint summary:hover {
             text-decoration: underline;
         }
+        
+        .step-hint {
+            background: rgba(254, 202, 87, 0.1);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .step-hint strong {
+            color: #feca57;
+        }
     </style>
 </head>
 <body>
@@ -236,8 +248,8 @@
             <a href="#task1">🧩 Задание 1. Дочерние элементы DOM</a>
             <a href="#task2">🎲 Задание 2. Выделение ячеек по диагонали</a>
             <a href="#task3">🔍 Задание 3. Использование getElementById</a>
-            <a href="#bonus1">⭐ Бонус-задание 1. Светофор</a>
-            <a href="#bonus2">🔎 Бонус-задание 2. Исследователь страницы</a>
+            <a href="#task4">⭐ Задание 4. Светофор (продолжение)</a>
+            <a href="#task5">🔎 Задание 5. Исследователь страницы (продолжение)</a>
             <a href="#cheatsheet">📚 Шпаргалка по DOM</a>
         </div>
         
@@ -313,15 +325,25 @@
                 <li>Найти второй <code>&lt;li&gt;</code> (с именем Пит)</li>
             </ol>
             <p>Напиши код в консоли браузера или в теге <code>&lt;script&gt;</code>.</p>
+            
+            <div class="step-hint">
+                <strong>📖 Что нужно знать для решения:</strong><br>
+                • <code>document.body</code> — это объект, который представляет тег &lt;body&gt;<br>
+                • <code>firstElementChild</code> — первый дочерний элемент (тег внутри)<br>
+                • <code>lastElementChild</code> — последний дочерний элемент<br>
+                • <code>children[0]</code> — тоже первый дочерний элемент (индексация с 0)<br>
+                • Элементы на одном уровне называются "соседями" (siblings)
+            </div>
+            
             <div class="tip-box">
-                <strong>💡 Подсказки:</strong>
+                <strong>💡 Подсказки шаг за шагом:</strong>
                 <ul>
-                    <li><code>document.body.firstElementChild</code> — первый дочерний элемент body</li>
-                    <li><code>document.body.children[0]</code> — тоже первый дочерний элемент</li>
-                    <li><code>document.body.lastElementChild</code> — последний дочерний элемент body</li>
-                    <li><code>element.lastElementChild</code> — последний дочерний элемент</li>
+                    <li>1. Чтобы найти &lt;div&gt; — посмотри, какой элемент в &lt;body&gt; первый. Это <code>document.body.firstElementChild</code></li>
+                    <li>2. Чтобы найти &lt;ul&gt; — это последний элемент внутри &lt;body&gt;: <code>document.body.lastElementChild</code></li>
+                    <li>3. Чтобы найти второй &lt;li&gt; — сначала найди &lt;ul&gt;, затем возьми его последнего ребёнка: <code>document.body.lastElementChild.lastElementChild</code></li>
                 </ul>
             </div>
+            
             <details class="solution-hint">
                 <summary>🔑 Посмотреть решение (только если совсем не получается)</summary>
                 <pre><code>// DOM-узел элемента &lt;div&gt;:
@@ -344,24 +366,105 @@ document.body.lastElementChild.lastElementChild</code></pre>
         
         <div class="task-box">
             <h3>✏️ Твоя задача:</h3>
-            <p>Создай HTML-страницу с таблицей 5×5 и кнопкой. При нажатии на кнопку ячейки на главной диагонали должны стать красными.</p>
-            <p>Используй <code>document.getElementById</code> и свойство <code>rows</code>.</p>
+            <p>Скопируй этот код в файл <code>diagonal.html</code> и открой в браузере. Затем напиши функцию <code>highlightDiagonal()</code>, которая выделит ячейки на главной диагонали.</p>
+            
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .diagonal {
+            background-color: red !important;
+            color: white;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #feca57;
+            border: none;
+            border-radius: 10px;
+        }
+        .reset-btn {
+            background: #3498db;
+            margin-top: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h3&gt;🎲 Выдели диагональ&lt;/h3&gt;
+    &lt;table id="myTable"&gt;
+        &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;15&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;20&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;button onclick="highlightDiagonal()"&gt;🔴 Выделить диагональ&lt;/button&gt;
+    &lt;button onclick="resetTable()" class="reset-btn"&gt;🔄 Сбросить&lt;/button&gt;
+    
+    &lt;script&gt;
+        function highlightDiagonal() {
+            // НАПИШИ КОД ЗДЕСЬ
+        }
+        
+        function resetTable() {
+            // НАПИШИ КОД ЗДЕСЬ (очистить выделение)
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            
+            <div class="step-hint">
+                <strong>📖 Что нужно знать для решения:</strong><br>
+                • <code>document.getElementById('myTable')</code> — получает таблицу по её id<br>
+                • <code>table.rows</code> — это коллекция (массивоподобный объект) всех строк таблицы<br>
+                • <code>table.rows[0]</code> — первая строка, <code>table.rows[1]</code> — вторая и так далее<br>
+                • <code>row.cells</code> — коллекция ячеек в строке<br>
+                • <code>row.cells[0]</code> — первая ячейка, <code>row.cells[1]</code> — вторая<br>
+                • На главной диагонали у первой строки — первая ячейка (индекс 0), у второй строки — вторая ячейка (индекс 1) и так далее<br>
+                • То есть формула: <code>table.rows[i].cells[i]</code> — это ячейка на диагонали
+            </div>
+            
             <div class="tip-box">
-                <strong>💡 Подсказки:</strong>
+                <strong>💡 Подсказки шаг за шагом:</strong>
                 <ul>
-                    <li><code>document.getElementById('myTable')</code> — получаем таблицу</li>
-                    <li><code>table.rows</code> — коллекция всех строк таблицы</li>
-                    <li><code>row.cells</code> — коллекция ячеек в строке</li>
-                    <li>На диагонали индекс строки равен индексу ячейки: <code>table.rows[i].cells[i]</code></li>
+                    <li>1. Сначала получи таблицу: <code>const table = document.getElementById('myTable');</code></li>
+                    <li>2. Нужно пройти по всем строкам. Используй цикл <code>for (let i = 0; i < table.rows.length; i++)</code></li>
+                    <li>3. Внутри цикла получи ячейку на диагонали: <code>table.rows[i].cells[i]</code></li>
+                    <li>4. Добавь этой ячейке класс "diagonal": <code>...classList.add('diagonal')</code></li>
+                    <li>5. Для сброса — пройди по всем строкам и всем ячейкам и удали класс "diagonal"</li>
                 </ul>
             </div>
+            
             <details class="solution-hint">
                 <summary>🔑 Посмотреть решение (только если совсем не получается)</summary>
                 <pre><code>function highlightDiagonal() {
     const table = document.getElementById('myTable');
     for (let i = 0; i &lt; table.rows.length; i++) {
-        table.rows[i].cells[i].style.backgroundColor = 'red';
-        table.rows[i].cells[i].style.color = 'white';
+        table.rows[i].cells[i].classList.add('diagonal');
+    }
+}
+
+function resetTable() {
+    const table = document.getElementById('myTable');
+    for (let i = 0; i &lt; table.rows.length; i++) {
+        for (let j = 0; j &lt; table.rows[i].cells.length; j++) {
+            table.rows[i].cells[j].classList.remove('diagonal');
+        }
     }
 }</code></pre>
             </details>
@@ -372,39 +475,82 @@ document.body.lastElementChild.lastElementChild</code></pre>
         
         <div class="task-box">
             <h3>✏️ Твоя задача:</h3>
-            <p>Создай страницу с тремя элементами, у которых есть id:</p>
-            <ul>
-                <li>Заголовок <code>&lt;h1 id="title"&gt;Привет!&lt;/h1&gt;</code></li>
-                <li>Параграф <code>&lt;p id="text"&gt;Какой-то текст&lt;/p&gt;</code></li>
-                <li>Кнопка <code>&lt;button id="myButton"&gt;Нажми меня&lt;/button&gt;</code></li>
-            </ul>
-            <p>С помощью <code>getElementById</code> измени:</p>
-            <ol>
-                <li>Цвет заголовка на синий</li>
-                <li>Размер шрифта параграфа на 20px</li>
-                <li>Фон кнопки на зелёный</li>
-            </ol>
+            <p>Создай страницу <code>byid.html</code> с таким кодом и допиши JavaScript:</p>
+            
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background: #1a1a2e;
+            color: white;
+        }
+        button {
+            background: #feca57;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="title"&gt;Привет!&lt;/h1&gt;
+    &lt;p id="text"&gt;Какой-то текст&lt;/p&gt;
+    &lt;button id="myButton"&gt;Нажми меня&lt;/button&gt;
+    &lt;button onclick="changeStyles()"&gt;Изменить стили&lt;/button&gt;
+    
+    &lt;script&gt;
+        function changeStyles() {
+            // НАПИШИ КОД ЗДЕСЬ
+            // 1. Измени цвет заголовка на синий
+            // 2. Измени размер шрифта параграфа на 20px
+            // 3. Измени фон кнопки на зелёный
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            
+            <div class="step-hint">
+                <strong>📖 Что нужно знать для решения:</strong><br>
+                • <code>document.getElementById('id_элемента')</code> — находит элемент по id<br>
+                • У найденного элемента можно менять стили через свойство <code>style</code><br>
+                • <code>element.style.color = 'blue'</code> — меняет цвет текста<br>
+                • <code>element.style.fontSize = '20px'</code> — меняет размер шрифта<br>
+                • <code>element.style.background = 'green'</code> — меняет цвет фона<br>
+                • Названия свойств в JavaScript пишутся слитно, без дефисов: <code>font-size</code> → <code>fontSize</code>
+            </div>
+            
+            <div class="tip-box">
+                <strong>💡 Подсказки шаг за шагом:</strong>
+                <ul>
+                    <li>1. Найди заголовок: <code>document.getElementById('title')</code> и измени его цвет</li>
+                    <li>2. Найди параграф: <code>document.getElementById('text')</code> и измени размер шрифта</li>
+                    <li>3. Найди кнопку: <code>document.getElementById('myButton')</code> и измени её фон</li>
+                </ul>
+            </div>
+            
             <details class="solution-hint">
                 <summary>🔑 Посмотреть решение (только если совсем не получается)</summary>
-                <pre><code>document.getElementById('title').style.color = 'blue';
-document.getElementById('text').style.fontSize = '20px';
-document.getElementById('myButton').style.background = 'green';</code></pre>
+                <pre><code>function changeStyles() {
+    document.getElementById('title').style.color = 'blue';
+    document.getElementById('text').style.fontSize = '20px';
+    document.getElementById('myButton').style.background = 'green';
+}</code></pre>
             </details>
         </div>
         
-        <h2 id="bonus1">⭐ Бонус-задание 1. Светофор</h2>
-        <p>Создай интерактивный светофор. При клике на кнопку «Следующий» цвета должны переключаться в правильном порядке.</p>
+        <h2 id="task4">⭐ Задание 4. Светофор (продолжение)</h2>
+        <p>Теперь, когда ты умеешь находить элементы и менять их классы, создадим интерактивный светофор.</p>
         
         <div class="task-box">
             <h3>✏️ Твоя задача:</h3>
-            <p>Дан готовый HTML и CSS для светофора, но код JavaScript не дописан. Тебе нужно:</p>
-            <ol>
-                <li>Найти все лампочки с помощью <code>document.querySelectorAll('.light')</code></li>
-                <li>Создать массив состояний <code>states</code>, где каждое состояние — это массив из трёх чисел (1 — включено, 0 — выключено)</li>
-                <li>Порядок переключения: Красный → Красный+Жёлтый → Зелёный → Жёлтый → и снова Красный</li>
-                <li>Написать функцию <code>updateLights()</code>, которая включает/выключает лампочки согласно текущему состоянию</li>
-                <li>Привязать функцию к кнопке</li>
-            </ol>
+            <p>Скопируй этот код в файл <code>traffic.html</code>. Нужно дописать JavaScript, чтобы при нажатии на кнопку цвета переключались в правильном порядке.</p>
             
             <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -449,6 +595,11 @@ document.getElementById('myButton').style.background = 'green';</code></pre>
             cursor: pointer;
             margin: 10px;
         }
+        .info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
     &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -459,24 +610,60 @@ document.getElementById('myButton').style.background = 'green';</code></pre>
         &lt;div class="light green"&gt;&lt;/div&gt;
     &lt;/div&gt;
     &lt;button id="nextLight"&gt;➡️ Следующий&lt;/button&gt;
+    &lt;div class="info"&gt;Порядок: Красный → Красный+Жёлтый → Зелёный → Жёлтый → Красный...&lt;/div&gt;
     
     &lt;script&gt;
-        // НАПИШИ КОД ЗДЕСЬ
-        // 1. Найди все лампочки
+        // ШАГ 1: Найди все лампочки с помощью querySelectorAll
         // const lights = ...
         
-        // 2. Создай массив состояний
-        // const states = ...
+        // ШАГ 2: Создай массив состояний
+        // Каждое состояние — это массив из трёх чисел (1 = включено, 0 = выключено)
+        // Порядок: [Красный, Жёлтый, Зелёный]
+        // const states = [
+        //     [1, 0, 0],  // состояние 0: только красный
+        //     [1, 1, 0],  // состояние 1: красный + жёлтый
+        //     [0, 0, 1],  // состояние 2: только зелёный
+        //     [0, 1, 0]   // состояние 3: только жёлтый
+        // ];
         
-        // 3. Создай переменную для текущего состояния
-        // let stateIndex = 0;
+        // ШАГ 3: Создай переменную для текущего состояния (начинаем с 0)
+        // let currentState = 0;
         
-        // 4. Напиши функцию updateLights()
+        // ШАГ 4: Напиши функцию updateLights()
+        // Она должна:
+        // - пройти по всем лампочкам (цикл for)
+        // - если в текущем состоянии на позиции i стоит 1 — добавить класс "active"
+        // - если 0 — удалить класс "active"
+        // - затем перейти к следующему состоянию (currentState = (currentState + 1) % states.length)
         
-        // 5. Привяжи функцию к кнопке
+        // ШАГ 5: Вызови updateLights() один раз, чтобы зажечь красный
+        
+        // ШАГ 6: Добавь обработчик нажатия на кнопку, который вызывает updateLights()
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+            
+            <div class="step-hint">
+                <strong>📖 Что нужно знать для решения:</strong><br>
+                • <code>document.querySelectorAll('.light')</code> — находит ВСЕ элементы с классом "light"<br>
+                • Результат — коллекция (как массив), где <code>lights[0]</code> — красный, <code>lights[1]</code> — жёлтый, <code>lights[2]</code> — зелёный<br>
+                • <code>element.classList.add('active')</code> — добавляет класс<br>
+                • <code>element.classList.remove('active')</code> — удаляет класс<br>
+                • <code>% (оператор остатка)</code> — помогает зациклить состояния: (0→1→2→3→0→1...)
+            </div>
+            
+            <div class="tip-box">
+                <strong>💡 Подсказки шаг за шагом:</strong>
+                <ul>
+                    <li>1. <code>const lights = document.querySelectorAll('.light');</code> — получаем все лампочки</li>
+                    <li>2. Создаём массив <code>states</code> с 4 состояниями (как указано в комментариях)</li>
+                    <li>3. <code>let currentState = 0;</code> — начинаем с красного</li>
+                    <li>4. В функции <code>updateLights()</code> используем цикл <code>for (let i = 0; i < lights.length; i++)</code></li>
+                    <li>5. Внутри цикла проверяем: если <code>states[currentState][i] === 1</code>, то добавляем класс "active", иначе удаляем</li>
+                    <li>6. После цикла: <code>currentState = (currentState + 1) % states.length;</code> — переходим к следующему состоянию</li>
+                    <li>7. В конце кода: <code>updateLights();</code> и <code>document.getElementById('nextLight').onclick = updateLights;</code></li>
+                </ul>
+            </div>
             
             <details class="solution-hint">
                 <summary>🔑 Посмотреть решение (только если совсем не получается)</summary>
@@ -487,17 +674,17 @@ const states = [
     [0, 0, 1],  // зелёный
     [0, 1, 0]   // жёлтый
 ];
-let stateIndex = 0;
+let currentState = 0;
 
 function updateLights() {
     for (let i = 0; i &lt; lights.length; i++) {
-        if (states[stateIndex][i]) {
+        if (states[currentState][i] === 1) {
             lights[i].classList.add('active');
         } else {
             lights[i].classList.remove('active');
         }
     }
-    stateIndex = (stateIndex + 1) % states.length;
+    currentState = (currentState + 1) % states.length;
 }
 
 updateLights();
@@ -505,119 +692,21 @@ document.getElementById('nextLight').onclick = updateLights;</code></pre>
             </details>
         </div>
         
-        <h2 id="bonus2">🔎 Бонус-задание 2. Исследователь страницы</h2>
-        <p>Открой любую страницу в интернете (например, google.com, wikipedia.org или любую другую). Нажми <code>F12</code> и перейди на вкладку <strong>Elements</strong>.</p>
+        <h2 id="task5">🔎 Задание 5. Исследователь страницы (продолжение)</h2>
+        <p>Теперь, когда ты знаешь, как находить элементы, попробуй применить эти знания на реальных сайтах!</p>
         
         <div class="success-box">
             <strong>📝 Что нужно сделать:</strong>
             <ul>
-                <li>🔍 Найди тег <code>&lt;body&gt;</code> — что у него внутри?</li>
-                <li>🔍 Найди тег <code>&lt;title&gt;</code> — какой текст в нём?</li>
-                <li>🔍 Найди элемент с классом <code>header</code> или <code>menu</code> (если есть)</li>
-                <li>✏️ Попробуй изменить текст любого элемента прямо в браузере (двойной клик по тексту во вкладке Elements)</li>
-                <li>🎨 В правой панели (Styles) измени цвет фона любого элемента</li>
-                <li>🖱️ Нажми на кнопку <strong>Выбрать элемент</strong> (значок стрелки в левом верхнем углу инспектора) и наведи на любой элемент страницы — браузер сам найдёт его в DOM-дереве</li>
+                <li>1. Открой любую страницу в интернете (например, google.com, wikipedia.org или vk.com)</li>
+                <li>2. Нажми <code>F12</code> (или правой кнопкой → «Исследовать элемент»)</li>
+                <li>3. Перейди на вкладку <strong>Elements</strong> — здесь ты видишь DOM-дерево страницы</li>
+                <li>4. Найди тег <code>&lt;body&gt;</code> — что у него внутри? (можно нажать на треугольник, чтобы раскрыть)</li>
+                <li>5. Найди тег <code>&lt;title&gt;</code> — какой текст в нём? (обычно в &lt;head&gt;)</li>
+                <li>6. Попробуй найти элемент с классом <code>header</code> или <code>menu</code> (если есть)</li>
+                <li>7. ✏️ Попробуй изменить текст любого элемента: двойной клик по тексту во вкладке Elements и напечатай что-то новое</li>
+                <li>8. 🎨 В правой панели (Styles) измени цвет фона любого элемента — найди свойство <code>background</code> или <code>background-color</code></li>
+                <li>9. 🖱️ Нажми на кнопку <strong>Выбрать элемент</strong> (значок стрелки в левом верхнем углу инспектора) и наведи на любой элемент страницы — браузер сам найдёт его в DOM-дереве</li>
+                <li>10. Перейди на вкладку <strong>Console</strong> и введи <code>document.body</code> — увидишь объект body. Попробуй <code>document.body.style.background = 'red'</code></li>
             </ul>
             <p style="margin-top: 10px;"><strong>Результат:</strong> напиши в тетради (или сохрани в файл), какие элементы ты нашёл и какие изменения сделал.</p>
-        </div>
-        
-        <div class="tip-box">
-            <strong>💡 Инструменты разработчика:</strong>
-            <ul>
-                <li><strong>Styles</strong> — здесь видно CSS, применённый к элементу. Почти всё можно отредактировать на месте.</li>
-                <li><strong>Computed</strong> — итоговые CSS-свойства элемента.</li>
-                <li><strong>Event Listeners</strong> — обработчики событий, привязанные к элементу.</li>
-                <li><strong>Console</strong> — можно вводить JavaScript-код прямо здесь. Выбранный элемент доступен как <code>$0</code>.</li>
-            </ul>
-        </div>
-        
-        <h2 id="cheatsheet">📚 Шпаргалка по DOM</h2>
-        <div class="cheatsheet">
-            <table>
-                <tr>
-                    <th>Команда</th>
-                    <th>Что делает</th>
-                </tr>
-                <tr>
-                    <td><code>document.getElementById('id')</code></td>
-                    <td>Находит элемент по id</td>
-                </tr>
-                <tr>
-                    <td><code>document.getElementsByClassName('class')</code></td>
-                    <td>Находит все элементы по классу (коллекция)</td>
-                </tr>
-                <tr>
-                    <td><code>document.querySelector('.class')</code></td>
-                    <td>Находит первый элемент по CSS-селектору</td>
-                </tr>
-                <tr>
-                    <td><code>document.querySelectorAll('div')</code></td>
-                    <td>Находит ВСЕ элементы по CSS-селектору</td>
-                </tr>
-                <tr>
-                    <td><code>element.parentElement</code></td>
-                    <td>Родитель элемента</td>
-                </tr>
-                <tr>
-                    <td><code>element.children</code></td>
-                    <td>Дети элемента</td>
-                </tr>
-                <tr>
-                    <td><code>element.firstElementChild</code></td>
-                    <td>Первый дочерний элемент</td>
-                </tr>
-                <tr>
-                    <td><code>element.lastElementChild</code></td>
-                    <td>Последний дочерний элемент</td>
-                </tr>
-                <tr>
-                    <td><code>element.classList.add('class')</code></td>
-                    <td>Добавляет класс</td>
-                </tr>
-                <tr>
-                    <td><code>element.classList.remove('class')</code></td>
-                    <td>Удаляет класс</td>
-                </tr>
-                <tr>
-                    <td><code>element.classList.toggle('class')</code></td>
-                    <td>Переключает класс (добавляет/удаляет)</td>
-                </tr>
-                <tr>
-                    <td><code>element.style.color = 'red'</code></td>
-                    <td>Меняет стиль</td>
-                </tr>
-                <tr>
-                    <td><code>element.innerHTML = 'текст'</code></td>
-                    <td>Меняет HTML-содержимое</td>
-                </tr>
-                <tr>
-                    <td><code>element.textContent = 'текст'</code></td>
-                    <td>Меняет текстовое содержимое</td>
-                </tr>
-            </table>
-        </div>
-        
-        <div class="tip-box">
-            <strong>💻 Взаимодействие с консолью:</strong>
-            <ul>
-                <li>На вкладке <strong>Elements</strong> выбери любой элемент</li>
-                <li>Нажми <strong>Esc</strong> — откроется консоль</li>
-                <li>Выбранный элемент доступен как <code>$0</code></li>
-                <li>Попробуй: <code>$0.style.background = 'red'</code></li>
-            </ul>
-        </div>
-        
-        <hr>
-        
-        <div style="text-align: center; padding: 20px;">
-            <h3>🎉 Удачи в выполнении заданий!</h3>
-            <p style="margin: 20px 0;">Используй шпаргалку, экспериментируй в консоли и не бойся ошибаться — это лучший способ научиться!</p>
-            <div class="nav-buttons">
-                <div></div>
-                <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Наверх</button>
-            </div>
-        </div>
-        
-    </div>
-</body>
-</html>
